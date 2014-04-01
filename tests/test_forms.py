@@ -15,7 +15,7 @@ from flask.ext.mongoengine.wtf import model_form
 
 from mongoengine import queryset_manager
 
-
+from mongoengine import FileField
 class WTFormsAppTestCase(unittest.TestCase):
 
     def setUp(self):
@@ -162,7 +162,7 @@ class WTFormsAppTestCase(unittest.TestCase):
                 'tags-1': 'mongodb',
                 'tags-2': 'mongoengine',
                 'tags-3': 'flask-mongoengine',
-            }), instance=post)
+                }), instance=post)
             self.assertTrue(form.validate())
             form.save()
             post = post.reload()
@@ -375,6 +375,16 @@ class WTFormsAppTestCase(unittest.TestCase):
             self.assertTrue("content-text" in "%s" % form.content.text)
 
 
+    def test_filefield_form(self):
+        with self.app.test_request_context('/'):
+            db = self.db
+
+            class Post(db.Document):
+                thumbnail= FileField()
+                text = db.StringField()
+            PostForm = model_form(Post)
+            form = PostForm()
+            self.assertEqual(wtforms.widgets.FileInput, type(form.post.widget))
 
 if __name__ == '__main__':
     unittest.main()

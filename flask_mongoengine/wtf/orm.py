@@ -13,7 +13,7 @@ except ImportError:
     from bson import SON as OrderedDict
 
 from wtforms import fields as f, validators
-from mongoengine import ReferenceField
+from mongoengine import ReferenceField,FileField
 
 from flask.ext.mongoengine.wtf.fields import ModelSelectField, ModelSelectMultipleField, DictField, NoneStringField, BinaryField
 from flask.ext.mongoengine.wtf.models import ModelForm
@@ -198,6 +198,9 @@ class ModelConverter(object):
     @converts('GenericReferenceField')
     def conv_GenericReference(self, model, field, kwargs):
         return
+    @converts('FileField')
+    def conv_File(self,model,field,kwargs):
+        return FileField()
 
     def coerce(self, field_type):
         coercions = {
