@@ -198,9 +198,10 @@ class ModelConverter(object):
     @converts('GenericReferenceField')
     def conv_GenericReference(self, model, field, kwargs):
         return
+
     @converts('FileField')
     def conv_File(self,model,field,kwargs):
-        return FileField()
+        return f.FileField(**kwargs)
 
     def coerce(self, field_type):
         coercions = {

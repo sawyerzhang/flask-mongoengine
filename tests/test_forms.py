@@ -384,7 +384,7 @@ class WTFormsAppTestCase(unittest.TestCase):
                 text = db.StringField()
             PostForm = model_form(Post)
             form = PostForm()
-            self.assertEqual(wtforms.widgets.FileInput, type(form.post.widget))
+            self.assertEqual(wtforms.widgets.FileInput, type(form.thumbnail.widget))
 
 if __name__ == '__main__':
     unittest.main()
